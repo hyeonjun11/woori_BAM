@@ -6,11 +6,11 @@ public class Main {
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
 		Scanner sc = new Scanner(System.in);
-
+		int i = 1;
+		
 		while (true) {
 			System.out.printf("명령어) ");
 			String cmd = sc.nextLine().trim();
-			int i = 1;
 			
 			if (cmd.equals("exit")) {
 			break;
