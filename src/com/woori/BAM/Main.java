@@ -4,38 +4,42 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int i;
-	
-		System.out.println("학생의 수를 입력하세요.");
-		int num = sc.nextInt();
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("학생의 수를 입력하세요 : ");
+		int num = scanner.nextInt();
+		scanner.nextLine();
+		
 		int[] scores = new int[num]; 
-		
-		System.out.println("학생의 이름을 입력하세요.");
 		String[] names = new String[num];
+		String[] grades = new String[num];
 		
 		
-		System.out.println("학생의 점수를 입력하세요.");
-		int[] score = new int[num];
+		for(int i = 0; i<num; i++) {
+			System.out.print((i+1)+"번 째 학생의 이름 :");
+			names[i] = scanner.nextLine();			
+			
+			System.out.print(names[i]+"의 점수 :");
+			scores[i] = scanner.nextInt();
+			scanner.nextLine();
+		}
+		for(int i =0; i< num;i++) {
+	
 		
-		switch () {
+		switch (scores[i]/10) {
 		case 10: 
-			System.out.println("A");
+			grades[i] = "A";
 			break;
 		case 9:
-			System.out.println("B");
+			grades[i] = "B";
 			break;
 		default:
-			System.out.println("C");
+			grades[i] = "C";
 		}
-		
-		
-		for(i=0; i<num;i++) {
-			System.out.println("학");
 		}
-		
-		
-		
-
+		System.out.println("---- 학생 성적 결과 ----- ");
+		for(int i =0; i<num; i++) {
+			System.out.println(names[i] + " : " + scores[i] + "점 (" + grades[i] + ")");
+		}					
 	}
 }
