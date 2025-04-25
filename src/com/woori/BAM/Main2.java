@@ -53,18 +53,32 @@ public class Main2 {
 				String[] cmdBits = cmd.split(" ");
 
 //				boolean articleChk = false;      // 객체지향프로그래밍 하기위한 준비
+				 
 				Article foundArticle = null;	// 객체로 대치(변수 vs 객체 차이점) 변수 1개 , 객체 (번호, 제목 ,내용)
 				
-				int id = Integer.parseInt(cmdBits[2]);  // 재정의 , 가독성(올라감) , 재활용(올라감)
-
+				int id = 0;
+				try {   // Exception 발생 할 예상 코드 블럭 
+					id = Integer.parseInt(cmdBits[2]);  // 재정의 , 가독성(올라감) , 재활용(올라감)
+					
+				} catch (NumberFormatException e) { // (예외타입 변수명)
+					System.out.println("숫자를 입력하세요");
+					continue;   // 이하 실행이 안되도록 ==> while 작동 
+				} catch (Exception e)	{
+					// 그 밖에 모든 Exception 처리한다
+				} 
+				
+				
+				
 				for (Article article : articles) {
 					if (article.id == id) { // 문자로 된 숫자를 ==> 숫자
 						foundArticle = article;
 						break;
+					
 					}
 				}
-
+				
 //				if (articleChk == false) {
+				
 				if (foundArticle == null) {                       // 개발자 고민할 영역 ==> try catch 문 설명 
 					System.out.println(id + "번 게시물이 존재하지 않습니다"); 
 					continue;     	// 매우 매우 중요. 아래에서 NuLLPointException 발생이 안되도록 조치
