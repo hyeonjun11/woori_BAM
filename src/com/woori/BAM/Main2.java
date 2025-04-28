@@ -11,7 +11,7 @@ public class Main2 {
 
 	public static void main(String[] args) {
 		LocalDateTime now = LocalDateTime.now();
-		String formatter = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+		String formatter = now.format(DateTimeFormatter.ofPattern("yyyy- MM- dd HH:mm:ss초"));
 		String regDate = formatter;  // 재활용 용도 
 		// 회원가입 , 게시글 수정 ==> 공동 모듈 맡는것 ==> 메소드 작성
 		System.out.println("== 프로그램 시작 ==");
@@ -87,7 +87,7 @@ public class Main2 {
 					System.out.println(id + "번 게시물이 존재하지 않습니다"); 
 					continue;     	
 				}
-				foundArticle.views++;
+				foundArticle.views++;  // 위에 null 검증 통과했으므로 조회수 1증가 
 				System.out.println("번호 :" + foundArticle.id); 				
 				System.out.println("날짜 :" + formatter);							
 				System.out.println("제목 :" + foundArticle.title);
