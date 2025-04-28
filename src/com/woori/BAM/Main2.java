@@ -19,7 +19,7 @@ public class Main2 {
 
 		int lastArticleId = 1; // 게시글 번호 , 마지막게시글번호 수정
 		List<Article> articles = new ArrayList<>();
-		
+		int views = 0;
 
 		while (true) {
 			System.out.printf("명령어) ");
@@ -41,29 +41,31 @@ public class Main2 {
 				String body = sc.nextLine().trim();
 				
 
-				Article article = new Article(lastArticleId, title, body, regDate);
+				
+				Article article = new Article(lastArticleId, title, body, regDate,views);
 				articles.add(article);
 
 				System.out.println(lastArticleId + "번글이 생성되었습니다");
 				lastArticleId++;
+				
+				
 
 			} else if (cmd.equals("article list")) {
 				if (articles.size() == 0) {
 					System.out.println("존재하는 게시글이 없습니다");
 					continue;
 				}
-				System.out.printf("번호    |     제목     |    내용    |      날짜\n");
+				System.out.printf("번호    |     제목     |     내용    |    조회수    |        날짜\n");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d      |     %s     |     %s    |     %s\n", article.id, article.title,article.body,formatter);
-				
+					System.out.printf("%d      |     %s     |     %s    |    %d     |    %s\n", article.id, article.title,article.body,article.views,formatter);
 				
 			} 
 		
 			} else if (cmd.startsWith("article detail ")) { 
 				String[] cmdBits = cmd.split(" ");
-
-				 
+				
+				
 				Article foundArticle = null;	
 				
 				int id = 0;
@@ -85,10 +87,12 @@ public class Main2 {
 					System.out.println(id + "번 게시물이 존재하지 않습니다"); 
 					continue;     	
 				}
+				foundArticle.views++;
 				System.out.println("번호 :" + foundArticle.id); 				
 				System.out.println("날짜 :" + formatter);							
 				System.out.println("제목 :" + foundArticle.title);
 				System.out.println("내용 :" + foundArticle.body);
+				System.out.println("조회수:"+ foundArticle.views);
 				
 			} else if (cmd.startsWith("article delete ")) { 
 				String[] cmdBits = cmd.split(" ");
@@ -162,14 +166,7 @@ public class Main2 {
 					System.out.println(id + "번 게시물이 수정되었습니다.");
 				}
 				
-				
-				
-			
-			
-				
-				
-				
-				
+
 				}else {
 				System.out.println("존재하지 않는 명령어 입니다");
 			}
@@ -184,11 +181,13 @@ class Article {
 	String title;
 	String body;
 	String regDate;
+	int views;
 
-	public Article(int id, String title, String body, String regDate) {
+	public Article(int id, String title, String body, String regDate,int views) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.regDate = regDate;
-	}
+		this.views = views;
+ 	}
 }
