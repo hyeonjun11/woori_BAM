@@ -42,10 +42,10 @@ public class Main2 {
 					System.out.println("존재하는 게시글이 없습니다");
 					continue;
 				}
-				System.out.printf("번호    |     제목\n");
+				System.out.printf("번호    |     제목     |    내용\n");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d      |     %s\n", article.id, article.title);
+					System.out.printf("%d      |     %s     |     %s\n", article.id, article.title,article.body);
 				
 				
 			} 
@@ -95,7 +95,7 @@ public class Main2 {
 					continue;   
 				} catch (Exception e)	{
 				} 
-//	
+	
 				for (Article article : articles) {
 					if (article.id == id) { 
 						foundArticle = article;
@@ -110,6 +110,54 @@ public class Main2 {
 					articles.remove(id-1);
 					System.out.println(id + "번 게시물이 삭제되었습니다.");
 				}
+				
+				
+			} else if (cmd.startsWith("article modify ")) { 
+				String[] cmdBits = cmd.split(" ");
+				
+				
+				Article foundArticle = null;
+				
+				int id = 0;
+				try {   
+					id = Integer.parseInt(cmdBits[2]);  
+					
+				} catch (NumberFormatException e) { 
+					System.out.println("명령어가 올바르지 않습니다");
+					continue;   
+				} catch (Exception e)	{
+				} 
+//	
+				for (Article article : articles) {
+					if (article.id == id) { 
+						foundArticle = article;  // 중요 ==> 주소 복사
+						break;
+					}
+				}
+				if (foundArticle == null) {                      
+					System.out.println(id + "번 게시물이 존재하지 않습니다"); 
+					continue;     	
+				}
+				if (foundArticle != null) {
+					System.out.println("수정할 제목 :");
+					String title = sc.nextLine().trim();
+					System.out.println("수정할 내용 :");
+					String body = sc.nextLine().trim();
+					
+					foundArticle.title = title;  	// 수정된 값을 객체에다 저장 ==> 수정
+					foundArticle.body = body;
+				
+//					articles.set(id-1, foundArticle);
+//					articles.set(id, foundArticle);
+					System.out.println(id + "번 게시물이 수정되었습니다.");
+				}
+				
+				
+				
+				
+			
+			
+				
 				
 				
 				
