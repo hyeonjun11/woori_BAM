@@ -19,7 +19,6 @@ public class Main2 {
 
 		int lastArticleId = 1; // 게시글 번호 , 마지막게시글번호 수정
 		List<Article> articles = new ArrayList<>();
-		int views = 0;
 
 		while (true) {
 			System.out.printf("명령어) ");
@@ -42,7 +41,7 @@ public class Main2 {
 				
 
 				
-				Article article = new Article(lastArticleId, title, body, regDate,views);
+				Article article = new Article(lastArticleId, title, body, regDate,0);
 				articles.add(article);
 
 				System.out.println(lastArticleId + "번글이 생성되었습니다");
