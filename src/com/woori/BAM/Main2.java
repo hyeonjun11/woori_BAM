@@ -3,14 +3,23 @@ package com.woori.BAM;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main2 {
+	
+
 	public static void main(String[] args) {
+		LocalDateTime now = LocalDateTime.now();
+		String formatter = now.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분 ss초"));
+		String regDate = formatter;  // 재활용 용도 
+		// 회원가입 , 게시글 수정 ==> 공동 모듈 맡는것 ==> 메소드 작성
 		System.out.println("== 프로그램 시작 ==");
 		Scanner sc = new Scanner(System.in);
 
 		int lastArticleId = 1; // 게시글 번호 , 마지막게시글번호 수정
 		List<Article> articles = new ArrayList<>();
+		
 
 		while (true) {
 			System.out.printf("명령어) ");
@@ -30,8 +39,9 @@ public class Main2 {
 				String title = sc.nextLine().trim();
 				System.out.printf("내용 : ");
 				String body = sc.nextLine().trim();
+				
 
-				Article article = new Article(lastArticleId, title, body);
+				Article article = new Article(lastArticleId, title, body, regDate);
 				articles.add(article);
 
 				System.out.println(lastArticleId + "번글이 생성되었습니다");
@@ -42,10 +52,10 @@ public class Main2 {
 					System.out.println("존재하는 게시글이 없습니다");
 					continue;
 				}
-				System.out.printf("번호    |     제목     |    내용\n");
+				System.out.printf("번호    |     제목     |    내용    |      날짜\n");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d      |     %s     |     %s\n", article.id, article.title,article.body);
+					System.out.printf("%d      |     %s     |     %s    |     %s\n", article.id, article.title,article.body,formatter);
 				
 				
 			} 
@@ -76,7 +86,7 @@ public class Main2 {
 					continue;     	
 				}
 				System.out.println("번호 :" + foundArticle.id); 				
-				System.out.println("날짜 : ~~~ ");							
+				System.out.println("날짜 :" + formatter);							
 				System.out.println("제목 :" + foundArticle.title);
 				System.out.println("내용 :" + foundArticle.body);
 				
@@ -154,7 +164,6 @@ public class Main2 {
 				
 				
 				
-				
 			
 			
 				
@@ -174,10 +183,12 @@ class Article {
 	int id;
 	String title;
 	String body;
+	String regDate;
 
-	public Article(int id, String title, String body) {
+	public Article(int id, String title, String body, String regDate) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
+		this.regDate = regDate;
 	}
 }
