@@ -5,19 +5,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main2 {
+
+	static List<Article> articles = new ArrayList<>();
+	static int lastArticleId = 1;
+
 	public static void main(String[] args) {
 
 		System.out.println("== 프로그램 시작 ==");
 
 		Scanner sc = new Scanner(System.in);
 
-		List<Article> articles = new ArrayList<>();
+		makeTestData(); // 중요 ---> 해당 메소드가 만들어 지는 위치? static 메소드일 수 밖에 없는 이유?
 
-		int lastArticleId = 1;
-		for (int i = 1; i <= 10; i++) {
-			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목"+i, "내용"+i, i*10));
-
-		}
 
 		while (true) {
 			System.out.printf("명령어) ");
@@ -169,6 +168,36 @@ public class Main2 {
 		sc.close();
 
 		System.out.println("== 프로그램 끝 ==");
+	}
+
+	private static void makeTestData() {
+		for (int i = 1; i <= 5; i++) {
+			
+			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용1", 10));
+
+//			ver3  // 3개 ---> 5개 최적화 (후위연산자 사용, 코드 2줄을 한 줄로 ) 5번 + 반복문 
+//			for (int i = 1; i <= 10; i++) {
+//			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용1", 10));
+//
+//		}
+			
+//			ver2 // 코드 2줄이 1줄로 최적화 , 후위연산자 사용
+//		articles.add(new Article(lastArticleId++,Util.getDateStr(), "제목1","내용1", 10));
+//		articles.add(new Article(lastArticleId++,Util.getDateStr(), "제목2","내용2", 20));
+//		articles.add(new Article(lastArticleId++,Util.getDateStr(), "제목3","내용3", 30));
+			
+//			ver 1 // 후위 연산자 사용 
+//		Article ar = new Article(lastArticleId,Util.getDateStr(), "제목1","내용1", 10);
+//		articles.add(ar);
+//		lastArticleId++;
+//		Article ar2 = new Article(lastArticleId,Util.getDateStr(), "제목2","내용2", 20);
+//		articles.add(ar2);
+//		lastArticleId++;
+//		Article ar3 = new Article(lastArticleId,Util.getDateStr(), "제목3","내용3", 30);
+//		articles.add(ar3);
+//		lastArticleId++;
+		}
+
 	}
 }
 
