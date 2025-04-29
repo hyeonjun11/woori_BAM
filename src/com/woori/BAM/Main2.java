@@ -6,8 +6,14 @@ import java.util.Scanner;
 
 public class Main2 {
 
-	static List<Article> articles = new ArrayList<>();
-	static int lastArticleId = 1;
+	static List<Article> articles;
+	static int lastArticleId;
+	
+	static {
+		articles = new ArrayList<>();
+		lastArticleId = 1;
+	}
+	// 시작하자마자 초기화, 관례 또는 가독성이 올라간다 
 
 	public static void main(String[] args) {
 
@@ -174,6 +180,7 @@ public class Main2 {
 		for (int i = 1; i <= 5; i++) {
 			
 			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용1", 10));
+		}
 
 //			ver3  // 3개 ---> 5개 최적화 (후위연산자 사용, 코드 2줄을 한 줄로 ) 5번 + 반복문 
 //			for (int i = 1; i <= 10; i++) {
@@ -196,7 +203,6 @@ public class Main2 {
 //		Article ar3 = new Article(lastArticleId,Util.getDateStr(), "제목3","내용3", 30);
 //		articles.add(ar3);
 //		lastArticleId++;
-		}
 
 	}
 }
