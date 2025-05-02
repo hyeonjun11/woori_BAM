@@ -9,12 +9,12 @@ import com.woori.BAM.util.Util;
 
 public class App {
 	// 전역변수 ==> this (자기 자신을 의미 , 객체)
-	List<Article> articles;   // List 타입의 articles
-	int lastArticleId;
-	
-	// 생성자를 통해서 초기화  기존 code(static 제거 한 상태)
+	private List<Article> articles; // List 타입의 articles
+	private int lastArticleId;
+
+	// 생성자를 통해서 초기화 기존 code(static 제거 한 상태)
 	App() {
-		articles = new ArrayList<>(); //데이터의 구조 ArrayList 형태 객체가 생성 
+		articles = new ArrayList<>(); // 데이터의 구조 ArrayList 형태 객체가 생성
 		lastArticleId = 1;
 	}
 
@@ -24,7 +24,6 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 
 		makeTestData(); // 중요 ---> 해당 메소드가 만들어 지는 위치? static 메소드일 수 밖에 없는 이유?
-
 
 		while (true) {
 			System.out.printf("명령어) ");
@@ -61,30 +60,20 @@ public class App {
 
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d	|	%s	|	%s	|	%d\n", article.getId(), article.getTitle(), article.getRegDate(),
-							article.getViewCnt());
+					System.out.printf("%d	|	%s	|	%s	|	%d\n", article.getId(), article.getTitle(),
+							article.getRegDate(), article.getViewCnt());
 				}
 
 			} else if (cmd.startsWith("article detail ")) {
-				String[] cmdBits = cmd.split(" ");
 
-				int id = 0;
+				int id = getCmdId(cmd);
 
-				try {
-					id = Integer.parseInt(cmdBits[2]);
-				} catch (NumberFormatException e) {
-					System.out.println("명령어가 올바르지 않습니다");
+				// id 가 0으로 리턴시 처리로직 보강
+				if (id == 0) {
 					continue;
 				}
 
-				Article foundArticle = null;
-
-				for (Article article : articles) {
-					if (article.getId() == id) {
-						foundArticle = article;
-						break;
-					}
-				}
+				Article foundArticle = getArticleById(id);  //article or null 
 
 				if (foundArticle == null) {
 					System.out.println(id + "번 게시물이 존재하지 않습니다");
@@ -100,25 +89,14 @@ public class App {
 				System.out.println("조회수 : " + foundArticle.getViewCnt());
 
 			} else if (cmd.startsWith("article modify ")) {
-				String[] cmdBits = cmd.split(" ");
+				int id = getCmdId(cmd);
 
-				int id = 0;
-
-				try {
-					id = Integer.parseInt(cmdBits[2]);
-				} catch (NumberFormatException e) {
-					System.out.println("명령어가 올바르지 않습니다");
+				// id 가 0으로 리턴시 처리로직 보강
+				if (id == 0) {
 					continue;
 				}
 
-				Article foundArticle = null;
-
-				for (Article article : articles) {
-					if (article.getId() == id) {
-						foundArticle = article;
-						break;
-					}
-				}
+				Article foundArticle = getArticleById(id);  //article or null 
 
 				if (foundArticle == null) {
 					System.out.println(id + "번 게시물이 존재하지 않습니다");
@@ -136,25 +114,14 @@ public class App {
 				System.out.println(id + "번 게시물이 수정되었습니다");
 
 			} else if (cmd.startsWith("article delete ")) {
-				String[] cmdBits = cmd.split(" ");
+				int id = getCmdId(cmd);
 
-				int id = 0;
-
-				try {
-					id = Integer.parseInt(cmdBits[2]);
-				} catch (NumberFormatException e) {
-					System.out.println("명령어가 올바르지 않습니다");
+				// id 가 0으로 리턴시 처리로직 보강
+				if (id == 0) {
 					continue;
 				}
 
-				Article foundArticle = null;
-
-				for (Article article : articles) {
-					if (article.getId() == id) {
-						foundArticle = article;
-						break;
-					}
-				}
+				Article foundArticle = getArticleById(id);  //article or null 
 
 				if (foundArticle == null) {
 					System.out.println(id + "번 게시물이 존재하지 않습니다");
@@ -176,10 +143,38 @@ public class App {
 		System.out.println("== 프로그램 끝 ==");
 	}
 
-	private  void makeTestData() {
+	private Article getArticleById(int id) {
+
+		for (Article article : articles) {
+			if (article.getId() == id) {
+				return article; 	// return article , 메서드 종료 
+			}
+		}
+
+		return null;
+
+	}
+
+	private int getCmdId(String cmd) {
+		String[] cmdBits = cmd.split(" ");
+
+		int id = 0;
+
+		try {
+			id = Integer.parseInt(cmdBits[2]);
+			return id; // id를 넘겨주고 메서드 종료
+		} catch (NumberFormatException e) {
+			System.out.println("명령어가 올바르지 않습니다");
+			return 0; // "asd " ---> 0
+		}
+
+	}
+
+	private void makeTestData() {
+		System.out.println("5개의 데이터가 생성되었습니다.");
 		for (int i = 1; i <= 5; i++) {
-			
-			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목1", "내용1", 10));
+
+			articles.add(new Article(lastArticleId++, Util.getDateStr(), "제목"+i, "내용"+i, i*10));
 		}
 	}
 }

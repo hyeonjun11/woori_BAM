@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class ChatClient {
     public static void main(String[] args) {
-        String serverIP = "127.0.0.1"; // 서버 IP (자기자신)
+        String serverIP = "192.168.0.66"; // 서버 IP (자기자신)
         int port = 9999; // 서버 포트 번호
 
         try (Socket socket = new Socket(serverIP, port)) {
